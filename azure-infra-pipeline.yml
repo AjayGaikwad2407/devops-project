@@ -17,7 +17,7 @@ variables:
   - group: 'infra-spn'
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: Default
 
 steps:
 - task: UsePythonVersion@0
