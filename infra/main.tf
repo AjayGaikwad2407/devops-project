@@ -61,3 +61,13 @@ module "keyvault" {
     tenant_id = data.azurerm_client_config.current.tenant_id
   
 }
+
+
+module "aks" {
+  source = "./modules/aks"
+  prefix               = var.prefix
+  resource_group_name  = var.resource_group_name
+  location             = var.location
+  subnet_id                 = module.network.subnet_id
+  log_analytics_workspace_id = module.log_analytics.law_id
+}

@@ -6,5 +6,8 @@ resource "azurerm_key_vault" "aks-kv" {
     sku_name                    = "standard"
     purge_protection_enabled    = false
     soft_delete_retention_days  = 7
-  
+    lifecycle {
+        prevent_destroy = true
+    }
+
 }
