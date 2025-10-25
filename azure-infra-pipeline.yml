@@ -39,9 +39,9 @@ steps:
     workingDirectory: '$(System.DefaultWorkingDirectory)/infra'
     commandOptions: >
       -auto-approve 
-      -var prefix=$(prefix)
-      -var location=$(location)
-      -var resource_group_name=$(resource_group_name)
+      -var "prefix=$(prefix)"
+      -var "location=$(location)"
+      -var "resource_group_name=$(resource_group_name)"
   env:
     ARM_CLIENT_ID: $(azureServicePrincipalId)
     ARM_CLIENT_SECRET: $(azureServicePrincipalKey)
