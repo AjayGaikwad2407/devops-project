@@ -20,23 +20,13 @@ pool:
   name: Default
 
 steps:
-# - task: UsePythonVersion@0
-#   inputs:
-#     versionSpec: '3.x'
-#   displayName: 'Use Python 3.x'
-
-# - script: |
-#     python -m pip install --upgrade pip
-#     pip install azure-cli
-
-#   displayName: 'Install Azure CLI'
 - script: |
-    az login --service-principal -u $(azureServicePrincipalId) -p $(azureServicePrincipalKey) --tenant $(azureTenantId)
-    az account set --subscription $(azureSubscriptionId)
+      az login --service-principal -u $(azureServicePrincipalId) -p $(azureServicePrincipalKey) --tenant $(azureTenantId)
+      az account set --subscription $(azureSubscriptionId)
+  displayName: 'Azure CLI Login'
 
-  displayName: 'Azure Login'
-
-- script: |
+- displayName: 'Terraform Init and Apply'
+  script: |
     cd infra
     terraform init
     terraform apply -auto-approve -var="prefix=$(prefix)" -var="location=$(location)" -var="resource_group_name=$(resource_group_name)"
