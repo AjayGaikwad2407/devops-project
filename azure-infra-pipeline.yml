@@ -27,5 +27,5 @@ steps:
 
 - script: |
     cd infra
-    terraform init
+    terraform init -backend-config="key=${prefix}.terraform.tfstate"
     terraform apply -auto-approve -var="prefix=$(prefix)" -var="location=$(location)" -var="resource_group_name=$(resource_group_name)"
