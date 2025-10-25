@@ -20,10 +20,27 @@ pool:
   name: Default
 
 steps:
-- script: |
-      az login --service-principal -u $(azureServicePrincipalId) -p $(azureServicePrincipalKey) --tenant $(azureTenantId)
-      az account set --subscription $(azureSubscriptionId)
-      cd infra
-      terraform init -backend-config="key=${prefix}.terraform.tfstate"
-      terraform apply -auto-approve -var="prefix=$(prefix)" -var="location=$(location)" -var="resource_group_name=$(resource_group_name)"
-  displayName: 'terraform init and apply'
+- task: TerraformCli@1
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/infra'
+  env:
+    ARM_CLIENT_ID: $(azureServicePrincipalId)
+    ARM_CLIENT_SECRET: $(azureServicePrincipalKey)
+    ARM_SUBSCRIPTION_ID: $(azureSubscriptionId)
+    ARM_TENANT_ID: $(azureTenantId)
+  displayName: 'Terraform Init'
+
+- task: TerraformCli@1
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/infra'
+    commandOptions: '-auto-approve -var="prefix=$(prefix)" -var="location=$(location)" -var="resource_group_name=$(resource_group_name)"'
+  env:
+    ARM_CLIENT_ID: $(azureServicePrincipalId)
+    ARM_CLIENT_SECRET: $(azureServicePrincipalKey)
+    ARM_SUBSCRIPTION_ID: $(azureSubscriptionId)
+    ARM_TENANT_ID: $(azureTenantId)
+  displayName: 'Terraform Apply'
