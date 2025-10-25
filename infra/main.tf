@@ -9,9 +9,12 @@ resource "azurerm_resource_group" "prod_rg" {
   }
 }
 
+data "azurerm_client_config" "current" {
+    
+}
+
 module "network" {
   source = "./modules/network"
-
   prefix               = var.prefix
   resource_group_name  = var.resource_group_name
   location             = var.location
@@ -40,4 +43,21 @@ module "network" {
       destination_address_prefix = "*"
     }
   }
+}
+
+module "log_analytics" {
+    source = "./modules/log_analytics"
+    prefix               = var.prefix
+    resource_group_name  = var.resource_group_name
+    location             = var.location
+  
+}
+
+module "keyvault" {
+    source = "./modules/keyvault"
+    prefix               = var.prefix
+    resource_group_name  = var.resource_group_name
+    location             = var.location
+    tenant_id = data.azurerm_client_config.current.tenant_id
+  
 }
