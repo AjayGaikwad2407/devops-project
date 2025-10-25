@@ -62,6 +62,12 @@ module "keyvault" {
   
 }
 
+module "acr" {
+  source = "./modules/acr"
+  prefix               = var.prefix
+  resource_group_name  = var.resource_group_name
+  location             = var.location
+}
 
 module "aks" {
   source = "./modules/aks"
