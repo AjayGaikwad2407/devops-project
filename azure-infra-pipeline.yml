@@ -13,6 +13,9 @@ parameters:
     type: string
     default: 'devops-infra-rg'
 
+variable-groups:
+  - 'infra-spn'
+
 pool:
   vmImage: 'ubuntu-latest'
 
