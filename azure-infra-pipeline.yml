@@ -23,9 +23,7 @@ steps:
 - script: |
       az login --service-principal -u $(azureServicePrincipalId) -p $(azureServicePrincipalKey) --tenant $(azureTenantId)
       az account set --subscription $(azureSubscriptionId)
-  displayName: 'Azure CLI Login'
-
-- script: |
-    cd infra
-    terraform init -backend-config="key=${prefix}.terraform.tfstate"
-    terraform apply -auto-approve -var="prefix=$(prefix)" -var="location=$(location)" -var="resource_group_name=$(resource_group_name)"
+      cd infra
+      terraform init -backend-config="key=${prefix}.terraform.tfstate"
+      terraform apply -auto-approve -var="prefix=$(prefix)" -var="location=$(location)" -var="resource_group_name=$(resource_group_name)"
+  displayName: 'terraform init and apply'
