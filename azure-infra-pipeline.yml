@@ -20,16 +20,16 @@ pool:
   name: Default
 
 steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.x'
-  displayName: 'Use Python 3.x'
+# - task: UsePythonVersion@0
+#   inputs:
+#     versionSpec: '3.x'
+#   displayName: 'Use Python 3.x'
 
-- script: |
-    python -m pip install --upgrade pip
-    pip install azure-cli
+# - script: |
+#     python -m pip install --upgrade pip
+#     pip install azure-cli
 
-  displayName: 'Install Azure CLI'
+#   displayName: 'Install Azure CLI'
 - script: |
     az login --service-principal -u $(azureServicePrincipalId) -p $(azureServicePrincipalKey) --tenant $(azureTenantId)
     az account set --subscription $(azureSubscriptionId)
