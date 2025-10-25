@@ -1,9 +1,6 @@
 resource "azurerm_resource_group" "prod_rg" {
   name     = var.resource_group_name
   location = var.location
-  lifecycle {
-    prevent_destroy = true
-  }
   tags = {
     environment = "${var.prefix}-environment"
   }
@@ -53,14 +50,13 @@ module "log_analytics" {
   
 }
 
-module "keyvault" {
-    source = "./modules/keyvault"
-    prefix               = var.prefix
-    resource_group_name  = var.resource_group_name
-    location             = var.location
-    tenant_id = data.azurerm_client_config.current.tenant_id
-  
-}
+#module "keyvault" {
+#    source = "./modules/keyvault"
+#    prefix               = var.prefix
+#    resource_group_name  = var.resource_group_name
+#    location             = var.location
+#    tenant_id = data.azurerm_client_config.current.tenant_id 
+#}
 
 module "acr" {
   source = "./modules/acr"

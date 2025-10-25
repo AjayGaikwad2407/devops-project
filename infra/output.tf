@@ -28,9 +28,3 @@ output "law_id" {
   
 }
 
-output "keyvault_id" {
-  description = "The ID of the Key Vault"
-  value       = module.keyvault.keyvault_id
-  
-}
-
