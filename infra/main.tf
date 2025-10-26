@@ -13,8 +13,8 @@ data "azurerm_client_config" "current" {
 module "network" {
   source = "./modules/network"
   prefix               = var.prefix
-  resource_group_name  = var.resource_group_name
-  location             = var.location
+  resource_group_name  = azurerm_resource_group.prod_rg.name
+  location             = azurerm_resource_group.prod_rg.location
 
   nsg_rules = {
     rule1 = {
@@ -45,8 +45,8 @@ module "network" {
 module "log_analytics" {
     source = "./modules/log_analytics"
     prefix               = var.prefix
-    resource_group_name  = var.resource_group_name
-    location             = var.location
+    resource_group_name  = azurerm_resource_group.prod_rg.name
+    location             = azurerm_resource_group.prod_rg.location
   
 }
 
@@ -61,15 +61,15 @@ module "log_analytics" {
 module "acr" {
   source = "./modules/acr"
   prefix               = var.prefix
-  resource_group_name  = var.resource_group_name
-  location             = var.location
+  resource_group_name  = azurerm_resource_group.prod_rg.name
+  location             = azurerm_resource_group.prod_rg.location
 }
 
 module "aks" {
   source = "./modules/aks"
   prefix               = var.prefix
-  resource_group_name  = var.resource_group_name
-  location             = var.location
+  resource_group_name  = azurerm_resource_group.prod_rg.name
+  location             = azurerm_resource_group.prod_rg.location
   subnet_id                 = module.network.subnet_id
   log_analytics_workspace_id = module.log_analytics.law_id
 }
